@@ -1,6 +1,7 @@
 CC = g++
 DEBUG = -g -Wall
-CFLAGS = -c -std=c++11 $DEBUG
+CFLAGS = -c -std=c++11 $(DEBUG) -Isdsl/include
+LDFLAGS= -Lsdsl/lib -static -lsdsl -ldivsufsort -ldivsufsort64
 
 SRCDIR = src
 BINDIR = bin
@@ -14,15 +15,13 @@ OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(EXTENSION)=.o))
 
 $(TARGET): $(OBJECTS)
 	@mkdir -p $(BINDIR)
-	$(CC) -o $(TARGET) $^
+	$(CC) -o $(TARGET) $^ $(LDFLAGS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(EXTENSION)
 	@mkdir -p $(BUILDDIR)
-	$(CC) $(CCFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $< 
 
 clean:
 	rm -rf $(BUILDDIR) $(BINDIR)
 
 .PHONY: clean
-
-
