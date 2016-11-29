@@ -17,6 +17,7 @@ std::vector< std::pair<bool, bool> > create_bit_vectors(std::string s, int k){
     std::vector<int> suffix_array = create_suffix_array(s);
  
     char *BWT = create_bwt(s, suffix_array);
+    for(int i = 1; i < n+1; ++i) printf("%c ", BWT[i]);
     char bwt[n+1];
     for(int i = 1; i < n+1; ++i) bwt[i] = BWT[i];
     

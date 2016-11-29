@@ -5,4 +5,4 @@
 #include <map>
 
 
-std::vector< std::pair<bool, bool> > create_bit_vectors(char* bwt, std::vector<int> lcp, int k, int n, std::map<char, int> C);
+std::vector< std::pair<bool, bool> > create_bit_vectors(std::string s, int k);
