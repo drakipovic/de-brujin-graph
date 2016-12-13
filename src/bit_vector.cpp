@@ -10,23 +10,21 @@
 #define right second
 
 
-std::vector< std::pair<bool, bool> > create_bit_vectors(std::string s, int k){
+std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, const std::string& s, std::vector<node>& G, std::queue<u_int>& q){
+    
     int n = s.size();
     std::vector< std::pair<bool, bool> > bit_vectors(n);   
-    std::queue<int> q;
     std::vector<int> suffix_array = create_suffix_array(s);
  
     char *BWT = create_bwt(s, suffix_array);
-    char bwt[n+1];
     for(int i = 1; i < n+1; ++i) bwt[i] = BWT[i];
-    
 
     std::vector<int> lcp = create_lcp(s, suffix_array);
     std::map<char, int> C = create_c(bwt, n); 
 
     int lb = 1, k_index = 0, last_diff = 0;
     bool open = false;
-    int counter = 0;
+    u_int counter = 1;
 
     for(int i = 2; i <= n+1; ++i){
         C[bwt[i-1]]++;
@@ -41,6 +39,7 @@ std::vector< std::pair<bool, bool> > create_bit_vectors(std::string s, int k){
                 if(k_index > lb){
                     bit_vectors[lb].right = true;
                     bit_vectors[i-1].right = true;
+                    G[counter] = node(k, lb, i-lb, lb);
                     q.push(counter);
                     ++counter;
                 }
