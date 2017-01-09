@@ -1,7 +1,7 @@
-CC = g++
+CC = g++-5
 DEBUG = -g -Wall
-CFLAGS = -c -std=c++11 $(DEBUG) -Isdsl/include
-LDFLAGS= -Lsdsl/lib -static -lsdsl -ldivsufsort -ldivsufsort64
+CFLAGS = -c -std=c++11 $(DEBUG) -I${SDSLLITE}/include
+LDFLAGS= -L${SDSLLITE}/lib -static -lsdsl -ldivsufsort -ldivsufsort64
 
 SRCDIR = src
 BINDIR = bin
@@ -19,7 +19,7 @@ $(TARGET): $(OBJECTS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(EXTENSION)
 	@mkdir -p $(BUILDDIR)
-	$(CC) $(CFLAGS) -c -o $@ $< 
+	$(CC) $(CFLAGS) -o $@ $< 
 
 clean:
 	rm -rf $(BUILDDIR) $(BINDIR)
