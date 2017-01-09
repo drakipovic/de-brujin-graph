@@ -21,13 +21,16 @@ int main(){
     int n = s.size();
 
     std::queue<u_int> q;
-    std::vector<node> G;
+    std::vector<node> G(n);
     char bwt[n + 1];
-    // std::vector< std::pair<bool, bool> > bit_vectors = create_bit_vectors(3, bwt, s, G, q);
-    // for(int i = 1; i < n+1; ++i) std::cout << bit_vectors[i].first << " " << bit_vectors[i].second << std::endl;
+    //std::vector< std::pair<bool, bool> > bit_vectors = create_bit_vectors(3, bwt, s, G, q);
+    //for(int i = 1; i < n+1; ++i) std::cout << bit_vectors[i].first << " " << bit_vectors[i].second << std::endl;
 
     G = createImplicitGraph(3, bwt, s);
-
+    //std::string sa = read("/home/katarina/Documents/faks/de-brujin-graph/src/e_coli.fa");
+    //std::cout << sa<< '\n';
     
     return 0;
+
+    
 }

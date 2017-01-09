@@ -7,6 +7,33 @@
 #include <cstring>
 #include <vector>
 #include <map>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+
+std::string read(std::string path){
+  bool isFirst = true;
+  std::ifstream file(path);
+  std::string str;
+  std::string line; 
+  while (getline( file, line )){
+    std::istringstream iss(line);
+    if (isFirst){
+        isFirst = false;
+        continue;
+    }
+    else if (line.at(0)=='>' && !isFirst){
+        str.append("#");
+        continue; 
+    }
+    else{
+        str.append(line);
+    }
+  }
+  str.append("$");
+  return str;
+}
 
 
 char* create_bwt(std::string in, std::vector<int>& suffix_array){
