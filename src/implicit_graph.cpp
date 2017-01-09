@@ -98,13 +98,13 @@ void getIntervals(u_int i, u_int j, u_int l, u_int r, std::vector<elem>& list) {
 	}
 }
 
-std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s) {
+std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, int stop_nodes) {
 
 	u_int n = s.size();
 	std::queue<u_int> Q;
 	std::vector<node> G(n); // ne znam kolko ih treba bit
     
-	std::vector<std::pair<bool, bool>> bit_vectors = create_bit_vectors(k, bwt, s, G, Q); 
+	std::vector<std::pair<bool, bool>> bit_vectors = create_bit_vectors(k, bwt, stop_nodes, s, G, Q); 
 
 	std::vector<std::pair<u_int, u_int>> rank_vectors;
 	rank_preprocess(bit_vectors, rank_vectors);

@@ -10,13 +10,12 @@
 #define right second
 
 
-std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, const std::string& s, std::vector<node>& G, std::queue<u_int>& q){
+std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, int d, const std::string& s, std::vector<node>& G, std::queue<u_int>& q){
     int n = s.size();
     std::vector< std::pair<bool, bool> > bit_vectors(n);   
     std::vector<int> suffix_array = create_suffix_array(s);
     // for(int i = 1; i < n+1; ++i) std::cout << suffix_array[i] << " ";
     // std::cout<<std::endl;
-    int d = 2;
     char *BWT = create_bwt(s, suffix_array);
     int tmp;
     for(int i = 1; i < n+1; ++i){

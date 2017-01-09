@@ -10,7 +10,7 @@
 #include "bit_vector.h"
 #include <limits.h>
 #include <unistd.h>
-#include "explicit_graph.h"
+
 
 std::string get_path(){
   char result[ PATH_MAX ];
@@ -28,9 +28,11 @@ void debug(std::string what, T value){
 
 int main(int argc, char **argv){
     std::string root_path = get_path();
-    root_path = root_path.substr(0, root_path.size()-8);
+
 
     int d;
+    root_path = root_path.substr(0, root_path.size()-8);
+
     std::string s = read(root_path + argv[1], d);
     std::cout << s;
     std::transform(s.begin(), s.end(), s.begin(), ::toupper);
@@ -40,7 +42,7 @@ int main(int argc, char **argv){
 
     std::queue<u_int> q;
     std::vector<node> G(n);
-    std::vector< std::pair<bool, bool> > bit_vectors = create_bit_vectors(3, bwt, s, G, q);
+    std::vector< std::pair<bool, bool> > bit_vectors = create_bit_vectors(3, bwt, d, s, G, q);
     for(int i = 1; i < n+1; ++i) std::cout << bit_vectors[i].second << " " << bit_vectors[i].first << std::endl;
     /*
     G = createImplicitGraph(3, bwt, s);
