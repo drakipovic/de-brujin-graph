@@ -8,6 +8,15 @@
 #include "utils.h"
 #include "implicit_graph.h"
 #include "bit_vector.h"
+#include <limits.h>
+#include <unistd.h>
+
+
+std::string get_path(){
+  char result[ PATH_MAX ];
+  ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
+  return std::string( result, (count > 0) ? count : 0 ).substr(0, 38);
+}
 
 template <typename T>
 void debug(std::string what, T value){
@@ -16,9 +25,10 @@ void debug(std::string what, T value){
 }
 
 
-int main(){
+int main(int argc, char **argv){
+    std::string root_path = get_path();
 
-    std::string s = read("/home/dinek/workspace/de-brujin-graph/input2.fa");
+    std::string s = read(root_path + argv[1]);
     std::transform(s.begin(), s.end(), s.begin(), ::toupper);
     int n = s.size();
 
