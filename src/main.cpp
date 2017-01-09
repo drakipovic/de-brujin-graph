@@ -15,7 +15,7 @@
 std::string get_path(){
   char result[ PATH_MAX ];
   ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
-  return std::string( result, (count > 0) ? count : 0 ).substr(0, 38);
+  return std::string( result, (count > 0) ? count : 0 );
 }
 
 template <typename T>
@@ -27,6 +27,7 @@ void debug(std::string what, T value){
 
 int main(int argc, char **argv){
     std::string root_path = get_path();
+    root_path = root_path.substr(0, root_path.size()-8);
 
     std::string s = read(root_path + argv[1]);
     std::transform(s.begin(), s.end(), s.begin(), ::toupper);
@@ -38,7 +39,7 @@ int main(int argc, char **argv){
     std::vector< std::pair<bool, bool> > bit_vectors = create_bit_vectors(3, bwt, s, G, q);
     for(int i = 1; i < n+1; ++i) std::cout << bit_vectors[i].second << " " << bit_vectors[i].first << std::endl;
 
-    //G = createImplicitGraph(3, bwt, s);
+    G = createImplicitGraph(3, bwt, s);
     
     
     return 0;
