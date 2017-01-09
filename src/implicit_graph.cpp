@@ -6,6 +6,7 @@
 
 #include "utils.h"
 #include "bit_vector.h"
+#include "implicit_graph.h"
 
 #include <sdsl/suffix_arrays.hpp>
 #include <sdsl/wavelet_trees.hpp>
@@ -166,6 +167,6 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s) {
 	std::cout << "Final graf G:" << std::endl;
 	for (const auto& it : G_out) std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
 
-	return G;
+	return G_out;
 } 
 

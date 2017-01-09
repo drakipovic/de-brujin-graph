@@ -12,8 +12,9 @@
 #include <sstream>
 
 
-std::string read(std::string path){
+std::string read(std::string path, int& num_stop_nodes){
   bool isFirst = true;
+  num_stop_nodes = 0;
   std::ifstream file(path);
   std::string str;
   std::string line; 
@@ -24,6 +25,7 @@ std::string read(std::string path){
         continue;
     }
     else if (line.at(0)=='>' && !isFirst){
+        num_stop_nodes ++;
         str.append("#");
         continue; 
     }
@@ -32,6 +34,7 @@ std::string read(std::string path){
     }
   }
   str.append("$");
+  num_stop_nodes ++;
   return str;
 }
 
@@ -116,3 +119,20 @@ std::map<char, int> create_c(char* bwt, int n){
 
     return C;
 }
+
+std::vector<int> create_lf(char* bwt, std::map<char, int> C){
+    int n = strlen(bwt);
+    std::vector<int> lf(n);
+    
+    for (int i = 1; i<n; i++){
+        char c = bwt[i];
+        if (c == '$'){
+            lf[i] = 1;
+        }
+        C[c] +=1;
+        lf[i] = C[c];
+        //std::cout << i << "  " << lf[i] << '\n';
+    }
+    return lf;
+}
+ 

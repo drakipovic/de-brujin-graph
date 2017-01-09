@@ -21,7 +21,22 @@ struct node {
 
 };
 
-std::string read(std::string path);
+struct enode {
+
+    u_short len; 
+    std::vector<u_short> pos_list; 
+    std::vector<u_short> adj_list; 
+
+    enode() {}; 
+    enode(u_short _len):
+        len(_len), pos_list(std::vector<u_short>()), adj_list(std::vector<u_short>()){};
+    bool isEmpty() {
+    	return len == 0 && pos_list.empty() && adj_list.empty();
+    }
+
+};
+
+std::string read(std::string path, int& num_stop_nodes);
 
 std::vector<int> create_suffix_array(std::string s);
 
@@ -30,5 +45,7 @@ char* create_bwt(std::string in, std::vector<int>& suffix_array);
 std::vector<int> create_lcp(std::string str, std::vector<int>& suffix_array);
 
 std::map<char, int> create_c(char* bwt, int n);
+
+std::vector<int> create_lf(char* bwt, std::map<char, int> C);
 
 #endif /* UTILS_H */
