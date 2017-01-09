@@ -11,14 +11,24 @@
 
 
 std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, const std::string& s, std::vector<node>& G, std::queue<u_int>& q){
-    
     int n = s.size();
     std::vector< std::pair<bool, bool> > bit_vectors(n);   
     std::vector<int> suffix_array = create_suffix_array(s);
- 
+    // for(int i = 1; i < n+1; ++i) std::cout << suffix_array[i] << " ";
+    // std::cout<<std::endl;
+    int d = 2;
     char *BWT = create_bwt(s, suffix_array);
-    for(int i = 1; i < n+1; ++i) bwt[i] = BWT[i];
-
+    int tmp;
+    for(int i = 1; i < n+1; ++i){
+        if(BWT[i] == '$') tmp = i;
+        bwt[i] = BWT[i];
+    }
+    char t = bwt[tmp];
+    //std::cout << t << std::endl;
+    bwt[tmp] = bwt[tmp + d];
+    bwt[tmp+d] = t;
+    // for(int i = 1; i < n+1; ++i) std::cout << bwt[i] << " ";
+    // std::cout << std::endl;
     std::vector<int> lcp = create_lcp(s, suffix_array);
     std::map<char, int> C = create_c(bwt, n); 
 
@@ -47,6 +57,7 @@ std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, const 
                 if(last_diff > lb){
                     for(int j = lb; j <= i-1; ++j){
                         char c = bwt[j];
+
                         if(c != '$' && c != '#') bit_vectors[C[c]].left = true;
                     }
                 }

@@ -61,6 +61,7 @@ std::vector<int> create_suffix_array(std::string s){
     if(ret < 0) std::cout << "Something went wrong!" << std::endl;
 
     std::vector<int> sa_v;
+    
     for(int i = 0; i < n; ++i){
         sa_v.push_back(sa[i]);
     }
@@ -99,14 +100,16 @@ std::map<char, int> create_c(char* bwt, int n){
     int a = 0, c = 0, g = 0, t = 0;
 
     for(int i = 1; i < n + 1; ++i){
-        if(bwt[i] == '$') ++a;
+        if(bwt[i] == '#') ++a;
         if(bwt[i] < 'C') ++c;
         if(bwt[i] < 'G') ++g;
         if(bwt[i] < 'T') ++t;
     }
 
     std::map<char, int> C;
-    C['A'] = a;
+    C['$'] = 0;
+    C['#'] = 1;
+    C['A'] = a+1;
     C['C'] = c;
     C['G'] = g;
     C['T'] = t;
