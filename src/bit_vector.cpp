@@ -29,17 +29,10 @@ std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, int d,
     //std::cout << "BWT: " << std::endl;
     bwt[tmp] = bwt[tmp + d];
     bwt[tmp+d] = t;
-    // for(int i = 1; i < n+1; ++i) std::cout << bwt[i] << std::endl;
-    // std::cout << std::endl;
 
     std::vector<int> lcp = create_lcp(s, suffix_array);
-    std::map<char, int> C = create_c(bwt, n); 
+    std::map<char, int> C = create_c(bwt, n);
 
-    // std::cout << "C array" << std::endl;
-    // char alphabet[6] = { '#', '$', 'A', 'C', 'G', 'T'};
-    // for (auto c : alphabet) {
-    //     std::cout << "C[" << c << "] = " << C[c] << std::endl; 
-    // }
 
     int lb = 1, k_index = 0, last_diff = 0;
     bool open = false;

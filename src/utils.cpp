@@ -120,16 +120,18 @@ std::map<char, int> create_c(char* bwt, int n){
 }
 
 std::vector<int> create_lf(char* bwt, std::map<char, int> C){
-    int n = strlen(bwt);
+    int n = strlen(bwt) - 2;
+    std::cout << "fjaifjeqifjqo" << n << std::endl;
     std::vector<int> lf(n);
     
-    for (int i = 1; i<n; i++){
+    for (int i = 1; i<=n; i++){
         char c = bwt[i];
         if (c == '$'){
-            lf[i] = 1;
+            lf[i-1] = 0;
+            continue;
         }
         C[c] +=1;
-        lf[i] = C[c];
+        lf[i-1] = C[c]-1;
         //std::cout << i << "  " << lf[i] << '\n';
     }
     return lf;
