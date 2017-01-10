@@ -64,7 +64,6 @@ std::vector<int> create_suffix_array(std::string s){
     if(ret < 0) std::cout << "Something went wrong!" << std::endl;
 
     std::vector<int> sa_v;
-    
     for(int i = 0; i < n; ++i){
         sa_v.push_back(sa[i]);
     }

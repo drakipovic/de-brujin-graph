@@ -12,7 +12,8 @@ struct node {
     u_short size; 
     u_short suffix_lb;
 
-    node() {}; 
+    node():
+        len(0), lb(0), size(0), suffix_lb(0) {}; 
     node(u_short _len, u_short _lb, u_short _size, u_short _slb):
         len(_len), lb(_lb), size(_size), suffix_lb(_slb) {};
     bool isEmpty() {

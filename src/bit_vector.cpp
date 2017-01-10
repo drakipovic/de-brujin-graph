@@ -3,19 +3,21 @@
 #include <string>
 #include <iostream>
 #include <map>
-#include <queue>
+#include <deque>
 #include "utils.h"
 
 #define left first
 #define right second
 
 
-std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, int d, const std::string& s, std::vector<node>& G, std::queue<u_int>& q){
+std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, int d, const std::string& s, std::vector<node>& G, std::deque<u_int>& q){
+
     int n = s.size();
-    std::vector< std::pair<bool, bool> > bit_vectors(n);   
+    std::vector< std::pair<bool, bool> > bit_vectors(n + 1);   
     std::vector<int> suffix_array = create_suffix_array(s);
     // for(int i = 1; i < n+1; ++i) std::cout << suffix_array[i] << " ";
     // std::cout<<std::endl;
+
     char *BWT = create_bwt(s, suffix_array);
     int tmp;
     for(int i = 1; i < n+1; ++i){
@@ -24,16 +26,24 @@ std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, int d,
     }
     char t = bwt[tmp];
     //std::cout << t << std::endl;
+    //std::cout << "BWT: " << std::endl;
     bwt[tmp] = bwt[tmp + d];
     bwt[tmp+d] = t;
-    // for(int i = 1; i < n+1; ++i) std::cout << bwt[i] << " ";
+    // for(int i = 1; i < n+1; ++i) std::cout << bwt[i] << std::endl;
     // std::cout << std::endl;
+
     std::vector<int> lcp = create_lcp(s, suffix_array);
     std::map<char, int> C = create_c(bwt, n); 
 
+    // std::cout << "C array" << std::endl;
+    // char alphabet[6] = { '#', '$', 'A', 'C', 'G', 'T'};
+    // for (auto c : alphabet) {
+    //     std::cout << "C[" << c << "] = " << C[c] << std::endl; 
+    // }
+
     int lb = 1, k_index = 0, last_diff = 0;
     bool open = false;
-    u_int counter = 1;
+    u_int counter = 0;
 
     for(int i = 2; i <= n+1; ++i){
         C[bwt[i-1]]++;
@@ -48,8 +58,8 @@ std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, int d,
                 if(k_index > lb){
                     bit_vectors[lb].right = true;
                     bit_vectors[i-1].right = true;
-                    G[counter] = node(k, lb, i-lb, lb);
-                    q.push(counter);
+                    G.push_back(node(k, lb-1, i-lb, lb-1));
+                    q.push_back(counter);
                     ++counter;
                 }
                 //std::cout << last_diff << " " << lb << std::endl;
