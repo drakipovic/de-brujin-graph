@@ -41,7 +41,7 @@ std::string read(std::string path, int& num_stop_nodes);
 
 std::vector<int> create_suffix_array(std::string s);
 
-char* create_bwt(std::string in, std::vector<int>& suffix_array);
+char* create_bwt(std::string in, std::vector<int>& suffix_array, int d);
 
 std::vector<int> create_lcp(std::string str, std::vector<int>& suffix_array);
 

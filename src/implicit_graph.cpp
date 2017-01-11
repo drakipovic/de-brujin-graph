@@ -78,12 +78,10 @@ void createWT(const char* bwt, u_int n) {
 
 void getIntervals(u_int i, u_int j, u_int l, u_int r, std::vector<elem>& list) {
 
-	std::cout << "inside, l = " << l << ", r = " << r << ", i = " << i << ", j = " << j << std::endl;
 	sdsl::wt_blcd<> wt = WT[std::make_pair(l, r)];
 
 	if (l == r) {
 		list.push_back(elem(alphabet[l], C[alphabet[l]] + i, C[alphabet[l]] + j));
-		std::cout << "returning, pushed: i = " << C[alphabet[l]] + i << ", j = " << C[alphabet[l]] + j << ", c = " << alphabet[l]  << std::endl;
 	} else {
 		u_int m = (l + r) / 2;
 		u_int a0 = 0, b0 = 0;
@@ -132,13 +130,12 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, in
 	// for (auto i : bit_vectors) std::cout << i.right << " ";
 	// std::cout << std::endl;
 
-
-
 	// std::cout << "btw: ";
-	// for (int k = 0; k <= n + 1; k++) {
+	// for (int k = 1; k <= n; k++) {
 	// 	std::cout << bwt[k] << " ";
 	// }
 	// std::cout << std::endl;
+	
 
 	// addition of stop nodes
 	u_int id;
@@ -159,6 +156,11 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, in
 	
 	//createWT(bwt, n);
 	C = create_c(bwt, n);
+	// std::cout << "C array: ";
+	// for (char c : alphabet) {
+	// 	std::cout <<  "C[" << c << "] = " << C[c] << std::endl;
+	// }
+	
 	sdsl::wt_blcd<> wt = createWtForRange(0, ALPHABET_SIZE-1, bwt, n, n);
 
 	bool extendable;
@@ -168,7 +170,7 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, in
 	std::vector<uint8_t> chars(wt.sigma);        // List of characters in the interval
 	std::vector<uint64_t> rank_c_i(wt.sigma); // Number of occurrence of character in [0 .. i-1]
 	std::vector<uint64_t> rank_c_j(wt.sigma); // Number of occurrence of character in [0 .. j-1]
-	
+
 	int iter = 0;
 	while (!Q.empty()) {
 		if (iter < q_init_size) {
@@ -237,9 +239,9 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, in
 				}
 			}
 
-			//std::cout << "Graf G:" << std::endl;
+			std::cout << "Graf G:" << std::endl;
 			for (auto& it : G) {
-				//std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
+				std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
 			}
 
 		} while (extendable);

@@ -18,7 +18,7 @@ std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, int d,
     // for(int i = 1; i < n+1; ++i) std::cout << suffix_array[i] << " ";
     // std::cout<<std::endl;
 
-    char *BWT = create_bwt(s, suffix_array);
+    char *BWT = create_bwt(s, suffix_array, d + 1);
     int tmp;
     for(int i = 1; i < n+1; ++i){
         if(BWT[i] == '$') tmp = i;
@@ -27,8 +27,8 @@ std::vector< std::pair<bool, bool> > create_bit_vectors(int k, char* bwt, int d,
     char t = bwt[tmp];
     //std::cout << t << std::endl;
     //std::cout << "BWT: " << std::endl;
-    bwt[tmp] = bwt[tmp + d];
-    bwt[tmp+d] = t;
+    // bwt[tmp] = bwt[tmp + d];
+    // bwt[tmp+d] = t;
     // for(int i = 1; i < n+1; ++i) std::cout << bwt[i] << std::endl;
     // std::cout << std::endl;
 
