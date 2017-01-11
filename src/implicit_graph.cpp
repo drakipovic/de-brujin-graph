@@ -258,4 +258,3 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, in
 
 	return G_out;
 } 
-

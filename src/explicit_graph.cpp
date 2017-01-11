@@ -50,10 +50,11 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
     std::cout << " n " << n << " d " << d << " k " << k << std::endl;
     
     std::cout << "pos " << pos << std::endl;
-
+    
     for (int s = 0; s< d; s++){
         std::cout << "i " << i  << " s " << s << std::endl;
-        int id = rightMax + d + i +1; // jer idem 3 po 3 od zadnjeg, a rightMax je za 1 manji
+        //int id = rightMax  + d + i; // jer idem 3 po 3 od zadnjeg, a rightMax je za 1 manji
+        int id = rightMax + leftMax + s;
         pos = pos - iG[id].len;
         int idx = iG[id].lb;
 
@@ -71,7 +72,8 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
         std::cout << bwt <<std::endl;
 
         char test;
-        while(bwt[idx+1]!='$' && bwt[idx+1]!='#'){
+        int end = 0;
+        while(bwt[idx+1]!='$' && bwt[idx+1]!='#' && end<9){
             i = lf[idx];
             test = bwt[idx+1];
             std::cout << "test: " << test <<std::endl;
@@ -104,6 +106,7 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
             id = newId;
             std::cout << "id u while kraj " << id << std::endl;
             std::cout << "i while kraj " <<i << std::endl;
+            end++;
 
         }
         startNodes[d-1-s] = id;
