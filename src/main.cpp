@@ -49,13 +49,13 @@ int main(int argc, char **argv){
 
  
     G = createImplicitGraph(3, bwt, s, d, bit_vectors);
-    for(int i = 1; i < n+1; ++i) std::cout << bit_vectors[i].second << " " << bit_vectors[i].first << std::endl;
-    
+    for(int i = 1; i < n+1; ++i) std::cout << bit_vectors[i].first << " " << bit_vectors[i].second << std::endl;
+    /*
     G[0] = node(4, 12, 3, 1);
     G[1] = node(3, 5, 1, 0);
     G[2] = node(4, 4, 1, 8);
     G[3] = node(4, 6, 2, 10);
-    
+    */
     std::map<char, int> C = create_c(bwt, n);
     std::vector<int> lf = create_lf(bwt, C);
 
