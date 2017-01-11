@@ -26,14 +26,14 @@ std::string read(std::string path, int& num_stop_nodes){
     }
     else if (line.at(0)=='>' && !isFirst){
         num_stop_nodes ++;
-        str.append("#");
+        str += (char) 1; // '#'
         continue; 
     }
     else{
         str.append(line);
     }
   }
-  str.append("$");
+  str += (char) 0; // '$'
   num_stop_nodes ++;
   return str;
 }
@@ -45,15 +45,14 @@ char* create_bwt(std::string in, std::vector<int>& suffix_array, int d){
 
     for(int i = 1; i < n; ++i){
 
-        bwt[i] = suffix_array[i] > 0 ? in[suffix_array[i]-1] : '$';
+        if (suffix_array[i] > 0) {
+            if (in[suffix_array[i]-1] == 1) bwt[i] = '#';
+            else bwt[i] = in[suffix_array[i]-1];
+        } else {
+            bwt[i] = '$';
+        }
+        
     }
-
-    //swift by one because of '#' char
-    char first = bwt[d];
-    for (int i = d; i > 1; i--) {
-        bwt[i] = bwt[i - 1];
-    }
-    bwt[1] = first;
 
     char* ret = bwt;
     return ret;
