@@ -21,8 +21,7 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
     std::cout << bwt[15] << std::endl;
     
 
-    int i = 0;
-    int pos = n + 1;
+
     //std::cout << pos << std::endl;
 
     std::vector<enode> G(iG.size());
@@ -39,9 +38,11 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
 		right_ += bit_vectors[i].right;
 		rank_vectors.push_back(std::pair<u_int, u_int>(left_, right_));
 	}
-    u_int rightMax = (rank_vectors[n].right / 2 )+1;
+    u_int rightMax = (rank_vectors[n].right / 2 );
 	u_int leftMax = rank_vectors[n].left;
 
+    int i = 0;
+    int pos = n+1;
     
     for (const auto& it : rank_vectors) std::cout <<  "ra("  << it.first << "," << it.second << ")" << std::endl;
     std::cout << std::endl << "leftMax" << leftMax << "rightMax" << rightMax << std::endl;
@@ -52,14 +53,14 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
 
     for (int s = 0; s< d; s++){
         std::cout << "i " << i  << " s " << s << std::endl;
-        int id = rightMax - d + i;
+        int id = rightMax + d + i +1; // jer idem 3 po 3 od zadnjeg, a rightMax je za 1 manji
         pos = pos - iG[id].len;
         int idx = iG[id].lb;
 
         G[id].len = iG[id].len;
         G[id].pos_list.emplace_back(pos);
 
-        i = lf[idx];
+        
 
         std::cout << "id " << id << std::endl;
         std::cout << "idx " << idx << std::endl;
@@ -69,9 +70,11 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
 
         std::cout << bwt <<std::endl;
 
-        int end = 0;
+        char test;
         while(bwt[idx+1]!='$' && bwt[idx+1]!='#'){
-
+            i = lf[idx];
+            test = bwt[idx+1];
+            std::cout << "test: " << test <<std::endl;
             int ones = rank_vectors[i+1].right; 
             std::cout << "ones " << ones << std::endl;
             int newId = 0;
@@ -87,21 +90,24 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
                 std::cout << "newId else " << newId << std::endl;
             }
 
-            idx = iG[newId].lb + (i - iG[newId].suffix_lb);
-            std::cout << "idx u while  lb  suf" << idx <<   "  " <<  iG[newId].lb << " "  << iG[newId].suffix_lb<< std::endl;
-            pos = pos - (iG[newId].len - k + 1);
-            std::cout << "pos u while " << pos << std::endl;
+            pos = pos - (iG[newId].len - k+1);
 
             G[newId].adj_list.emplace_back(id);
             G[newId].pos_list.emplace_back(pos);
             G[newId].len = iG[newId].len;
 
+            idx = iG[newId].lb + (i - iG[newId].suffix_lb);
+            std::cout << "idx u while  lb  suf" << idx <<   "  " <<  iG[newId].lb << " "  << iG[newId].suffix_lb<< std::endl;
+        
+            std::cout << "pos u while " << pos << std::endl;
+
             id = newId;
             std::cout << "id u while kraj " << id << std::endl;
-            i = lf[idx];
             std::cout << "i while kraj " <<i << std::endl;
+
         }
         startNodes[d-1-s] = id;
+        i = lf[idx];
     }
    
     return G;
