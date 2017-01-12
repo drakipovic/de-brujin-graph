@@ -15,17 +15,15 @@
 std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::vector<int> lf, std::vector< std::pair<bool, bool> > bit_vectors, int d, int n, int k){
     
     //std::cout << d<< std::endl;
-    std::cout << "Final graf G:" << std::endl;
-	for (const auto& it : iG) std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
-    for (const auto& it : lf) std::cout <<  "lf("  << it  << ")" << std::endl;
-    std::cout << bwt[15] << std::endl;
-    
+    // std::cout << "Final graf G:" << std::endl;
+	// for (const auto& it : iG) std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
+    // for (const auto& it : lf) std::cout <<  "lf("  << it  << ")" << std::endl;    
 
 
     //std::cout << pos << std::endl;
 
     std::vector<enode> G(iG.size());
-    std::vector<int> startNodes(d);
+    std::vector<int> start_nodes(d);
     for (int j = 1; j<G.size(); j++){
         G[j] = enode();
     }
@@ -50,10 +48,11 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
     std::cout << " n " << n << " d " << d << " k " << k << std::endl;
     
     std::cout << "pos " << pos << std::endl;
-
+    
     for (int s = 0; s< d; s++){
         std::cout << "i " << i  << " s " << s << std::endl;
-        int id = rightMax + d + i +1; // jer idem 3 po 3 od zadnjeg, a rightMax je za 1 manji
+        //int id = rightMax  + d + i; // jer idem 3 po 3 od zadnjeg, a rightMax je za 1 manji
+        int id = rightMax + leftMax + s;
         pos = pos - iG[id].len;
         int idx = iG[id].lb;
 
@@ -71,6 +70,7 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
         std::cout << bwt <<std::endl;
 
         char test;
+        int end = 0;
         while(bwt[idx+1]!='$' && bwt[idx+1]!='#'){
             i = lf[idx];
             test = bwt[idx+1];
@@ -104,9 +104,10 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
             id = newId;
             std::cout << "id u while kraj " << id << std::endl;
             std::cout << "i while kraj " <<i << std::endl;
+            end++;
 
         }
-        startNodes[d-1-s] = id;
+        start_nodes[d-1-s] = id;
         i = lf[idx];
     }
    

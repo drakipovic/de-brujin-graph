@@ -125,9 +125,7 @@ std::map<char, int> create_c(char* bwt, int n){
     return C;
 }
 
-std::vector<int> create_lf(char* bwt, std::map<char, int> C){
-    int n = strlen(bwt) - 2;
-    std::cout << "fjaifjeqifjqo" << n << std::endl;
+std::vector<int> create_lf(char* bwt, std::map<char, int> C, int n){
     std::vector<int> lf(n);
     
     for (int i = 1; i<=n; i++){

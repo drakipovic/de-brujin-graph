@@ -47,6 +47,6 @@ std::vector<int> create_lcp(std::string str, std::vector<int>& suffix_array);
 
 std::map<char, int> create_c(char* bwt, int n);
 
-std::vector<int> create_lf(char* bwt, std::map<char, int> C);
+std::vector<int> create_lf(char* bwt, std::map<char, int> C, int n);
 
 #endif /* UTILS_H */

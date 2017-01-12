@@ -42,7 +42,7 @@ void rank_preprocess(const std::vector<std::pair<bool, bool>>& bit_vectors, std:
 	}
 }
 
-sdsl::wt_blcd<> createWtForRange(int i, int j, const char* bwt, u_int n, u_int size) {
+sdsl::wt_blcd<> create_wt_for_range(int i, int j, const char* bwt, u_int n, u_int size) {
 
 	std::string tmp(size, 'a'); 
 	int l = 0;
@@ -57,9 +57,9 @@ sdsl::wt_blcd<> createWtForRange(int i, int j, const char* bwt, u_int n, u_int s
 
 } 
 
-void createWT(const char* bwt, u_int n) {
+void create_wt(const char* bwt, u_int n) {
 
-	sdsl::wt_blcd<> wt_root = createWtForRange(0, ALPHABET_SIZE-1, bwt, n, n);
+	sdsl::wt_blcd<> wt_root = create_wt_for_range(0, ALPHABET_SIZE-1, bwt, n, n);
 	WT[std::make_pair(0, ALPHABET_SIZE-1)] = wt_root;
 	
 	sdsl::wt_blcd<> wt;
@@ -69,38 +69,14 @@ void createWT(const char* bwt, u_int n) {
 			u_int size = 0;
 			for (int k = i; k <= j; k++) size += wt_root.rank(n, alphabet[k]);
 		
-			wt = createWtForRange(i, j, bwt, n, size);
+			wt = create_wt_for_range(i, j, bwt, n, size);
 			WT[std::make_pair(i, j)] = wt;
 		}
 	}
 
 }
 
-void getIntervals(u_int i, u_int j, u_int l, u_int r, std::vector<elem>& list) {
-
-	sdsl::wt_blcd<> wt = WT[std::make_pair(l, r)];
-
-	if (l == r) {
-		list.push_back(elem(alphabet[l], C[alphabet[l]] + i, C[alphabet[l]] + j));
-	} else {
-		u_int m = (l + r) / 2;
-		u_int a0 = 0, b0 = 0;
-		for (u_int k = l; k <= m; k++) {
-			a0 += wt.rank(i - 1, alphabet[k]);
-			b0 += wt.rank(j, alphabet[k]);
-		}
-		
-		u_int a1 = i-1-a0;
-		u_int b1 = j - b0;
-		if (b0 > a0)
-			getIntervals(a0 + 1, b0, l, m, list);
-		if (b1 > a1)
-			getIntervals(a1 + 1, b1, m + 1, r, list);
-		
-	}
-}
-
-std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, int d, std::vector< std::pair<bool, bool>>& bit_vectors) {
+std::vector<node> create_implicit_graph(int k, char* bwt, const std::string& s, int d, std::vector< std::pair<bool, bool>>& bit_vectors) {
 
 	u_int n = s.size();
 	std::deque<u_int> Q;
@@ -161,7 +137,7 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, in
 	// 	std::cout <<  "C[" << c << "] = " << C[c] << std::endl;
 	// }
 	
-	sdsl::wt_blcd<> wt = createWtForRange(0, ALPHABET_SIZE-1, bwt, n, n);
+	sdsl::wt_blcd<> wt = create_wt_for_range(0, ALPHABET_SIZE-1, bwt, n, n);
 
 	bool extendable;
 	u_short lb, rb, len;
@@ -192,8 +168,7 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, in
 			extendable = false;
 			
 			std::vector<elem> list;
-			//std::cout << "Calling getIntervals lb = " << lb << ", rb = " << rb + 1 << std::endl;
-			//getIntervals(lb, rb, 0, ALPHABET_SIZE-1, list);
+
 			interval_symbols(wt, lb, rb + 1, size, chars, rank_c_i, rank_c_j);
 			//std::cout << "size = " << size << std::endl;
 			for (int it = 0; it < size; it++) {
@@ -239,10 +214,10 @@ std::vector<node> createImplicitGraph(int k, char* bwt, const std::string& s, in
 				}
 			}
 
-			std::cout << "Graf G:" << std::endl;
-			for (auto& it : G) {
-				std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
-			}
+			// std::cout << "Graf G:" << std::endl;
+			// for (auto& it : G) {
+			// 	std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
+			// }
 
 		} while (extendable);
 	}
