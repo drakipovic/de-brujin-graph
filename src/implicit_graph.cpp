@@ -126,9 +126,9 @@ std::vector<node> create_implicit_graph(int k, char* bwt, const std::string& s, 
 	int q_init_size = Q.size();
 	//std::cout << "Q init size = " << q_init_size << std::endl;
 
-	std::cout << "Init graf G:" << std::endl;
-	for (auto& it : G) 
-		std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
+	// std::cout << "Init graf G:" << std::endl;
+	// for (auto& it : G) 
+	// 	std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
 	
 	//createWT(bwt, n);
 	C = create_c(bwt, n);

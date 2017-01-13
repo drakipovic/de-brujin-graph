@@ -7,14 +7,14 @@
 
 struct node {
 
-    u_short len; 
-    u_short lb; 
-    u_short size; 
-    u_short suffix_lb;
+    int len; 
+    int lb; 
+    int size; 
+    int suffix_lb;
 
     node():
         len(0), lb(0), size(0), suffix_lb(0) {}; 
-    node(u_short _len, u_short _lb, u_short _size, u_short _slb):
+    node(int _len, int _lb, int _size, int _slb):
         len(_len), lb(_lb), size(_size), suffix_lb(_slb) {};
     bool isEmpty() {
     	return len == 0 && lb == 0 && size == 0 && suffix_lb == 0;
@@ -24,13 +24,13 @@ struct node {
 
 struct enode {
 
-    u_short len; 
-    std::vector<u_short> pos_list; 
-    std::vector<u_short> adj_list; 
+    int len; 
+    std::vector<int> pos_list; 
+    std::vector<int> adj_list; 
 
     enode() {}; 
-    enode(u_short _len):
-        len(_len), pos_list(std::vector<u_short>()), adj_list(std::vector<u_short>()){};
+    enode(int _len):
+        len(_len), pos_list(std::vector<int>()), adj_list(std::vector<int>()){};
     bool isEmpty() {
     	return len == 0 && pos_list.empty() && adj_list.empty();
     }

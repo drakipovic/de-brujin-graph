@@ -18,6 +18,7 @@ std::string read(std::string path, int& num_stop_nodes){
   std::ifstream file(path);
   std::string str;
   std::string line; 
+  int h = 1;
   while (getline( file, line )){
     std::istringstream iss(line);
     if (isFirst){
@@ -26,7 +27,8 @@ std::string read(std::string path, int& num_stop_nodes){
     }
     else if (line.at(0)=='>' && !isFirst){
         num_stop_nodes ++;
-        str += (char) 1; // '#'
+        str += (char) 1;
+        ++h; // '#'
         continue; 
     }
     else{
@@ -90,7 +92,10 @@ std::vector<int> create_lcp(std::string s, std::vector<int>& sa){
     for(int i = 0; i <= n; ++i){
 
         int j = sa[rank[i]-1];
-        while(i+k < n && j+k < n && s[i+k] == s[j+k]) ++k;
+        while(i+k < n && j+k < n && s[i+k] == s[j+k]){
+            if(s[i+k] == 1) break;
+            ++k;
+        }
      
         lcp[rank[i]] = k;
 
