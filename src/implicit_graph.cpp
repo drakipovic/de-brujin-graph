@@ -4,6 +4,7 @@
 #include <queue>
 #include <deque>
 #include <map>
+#include <algorithm>
 
 #include "utils.h"
 #include "bit_vector.h"
@@ -221,16 +222,16 @@ std::vector<node> create_implicit_graph(int k, char* bwt, const std::string& s, 
 
 		} while (extendable);
 	}
- 
-	std::vector<node> G_out = G;
-	// for (u_int i = 0; i < n; i++) {
-	// 	if (G[i].isEmpty()) continue;
-	// 	G_out.emplace_back(G[i]);
-	// }
+	
+	std::vector<node> graph(G.size());
 
-	std::cout << "Final graf G:" << std::endl;
-	for (const auto& it : G_out) std::cout <<  "node("  << it.len << ", " << it.lb << ", " << it.size << ", " << it.suffix_lb  << ")" << std::endl;
+	for(int i = 0; i < G.size(); ++i) graph.push_back(G[i]);
+	std::sort(graph.begin(), graph.end(), cmp);
 
-	return G_out;
+	for (int i = 0; i < graph.size(); ++i){
+		if(!graph[i].len) continue;
+		std::cout << graph[i].len << " " <<  graph[i].lb << " " << graph[i].size << " " << graph[i].suffix_lb  << std::endl;
+	}
+	return G;
 } 
 

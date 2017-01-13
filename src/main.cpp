@@ -61,13 +61,13 @@ int main(int argc, char **argv){
 
     std::vector<enode> eG = create_explicit_graph(G, bwt, lf, bit_vectors, d, n, k);
     
-    for (int i = 0; i<eG.size(); i++){
-        std::cout << "node(" <<std::endl<< "len =" << eG[i].len <<std::endl << "pos=[ " ;
-        for (const auto& it : eG[i].pos_list) std::cout << it << " ";
-        std::cout <<"] "<< std::endl << "adj=[ ";
-        for (const auto& it : eG[i].adj_list) std::cout << it << " ";
-        std::cout <<"]"<<std::endl << ")" <<std::endl;
-    }
+    // for (int i = 0; i<eG.size(); i++){
+    //     std::cout << "node(" <<std::endl<< "len =" << eG[i].len <<std::endl << "pos=[ " ;
+    //     for (const auto& it : eG[i].pos_list) std::cout << it << " ";
+    //     std::cout <<"] "<< std::endl << "adj=[ ";
+    //     for (const auto& it : eG[i].adj_list) std::cout << it << " ";
+    //     std::cout <<"]"<<std::endl << ")" <<std::endl;
+    // }
 
     return 0;
 

@@ -22,6 +22,10 @@ struct node {
 
 };
 
+static bool cmp(const node &a, const node &b){
+    return a.lb < b.lb;
+}
+
 struct enode {
 
     int len; 

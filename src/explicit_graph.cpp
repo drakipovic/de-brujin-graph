@@ -50,7 +50,7 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
     // std::cout << "pos " << pos << std::endl;
     
     for (int s = 0; s< d; s++){
-        std::cout << "i " << i  << " s " << s << std::endl;
+        //std::cout << "i " << i  << " s " << s << std::endl;
         //int id = rightMax  + d + i; // jer idem 3 po 3 od zadnjeg, a rightMax je za 1 manji
         int id = rightMax + leftMax + s;
         pos = pos - iG[id].len;
