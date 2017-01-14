@@ -1,18 +1,14 @@
 #include "utils.h"
 #include "sais.h"
-#include <iostream>
-#include <string>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <vector>
-#include <map>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
-
-std::string read(std::string path, int& num_stop_nodes){
+std::string read(const std::string& path, int& num_stop_nodes){
   bool isFirst = true;
   num_stop_nodes = 0;
   std::ifstream file(path);
@@ -41,11 +37,11 @@ std::string read(std::string path, int& num_stop_nodes){
 }
 
 
-char* create_bwt(std::string in, std::vector<int>& suffix_array, int d){
+char* create_bwt(const std::string& in, const std::vector<int>& suffix_array, int d){
     int n = suffix_array.size();
     char *bwt = (char*)malloc(n*sizeof(char));
 
-    for(int i = 1; i < n; ++i){
+    for(int i = 1; i < n; ++i) {
 
         if (suffix_array[i] > 0) {
             if (in[suffix_array[i]-1] == 1) bwt[i] = '#';
@@ -56,31 +52,24 @@ char* create_bwt(std::string in, std::vector<int>& suffix_array, int d){
         
     }
 
-    char* ret = bwt;
-    return ret;
+    return bwt;
 }
 
 
-std::vector<int> create_suffix_array(std::string s){
-    unsigned char *s_cp = new unsigned char[s.size()+1];
-    strcpy((char *)s_cp, s.c_str());
-
+std::vector<int> create_suffix_array(const std::string s){
     int n = s.size() + 1;
+
     int *sa = (int*)malloc(n * sizeof(int));
-    int ret = sais(s_cp, sa, n);
+    int ret = sais((unsigned char*) s.c_str(), sa, n);
 
     if(ret < 0) std::cout << "Something went wrong!" << std::endl;
 
-    std::vector<int> sa_v;
-    for(int i = 0; i < n; ++i){
-        sa_v.push_back(sa[i]);
-    }
-
+    std::vector<int> sa_v(sa, sa + n);
     return sa_v;
 }
 
 
-std::vector<int> create_lcp(std::string s, std::vector<int>& sa){
+std::vector<int> create_lcp(const std::string& s, const std::vector<int>& sa){
     int n = s.size();
     std::vector<int> lcp(n+2, 0);
     std::vector<int> rank(n+1, 0);
@@ -130,7 +119,7 @@ std::map<char, int> create_c(char* bwt, int n){
     return C;
 }
 
-std::vector<int> create_lf(char* bwt, std::map<char, int> C, int n){
+std::vector<int> create_lf(char* bwt, std::map<char, int>& C, int n){
     std::vector<int> lf(n);
     
     for (int i = 1; i<=n; i++){
@@ -141,8 +130,6 @@ std::vector<int> create_lf(char* bwt, std::map<char, int> C, int n){
         }
         C[c] +=1;
         lf[i-1] = C[c]-1;
-        //std::cout << i << "  " << lf[i] << '\n';
     }
     return lf;
 }
- 

@@ -16,7 +16,7 @@ total = len(input_files) - 1
 for input_file in input_files:
     if input_file.startswith('input'):
         input_file_index = input_file.split('.')[0].split('_')[1]
-        if(int(input_file_index) >= 8): continue
+        #if(int(input_file_index) >= 8): continue
 
         output = subprocess.check_output([bin_path + '/main', input_file])
         with open(os.path.join(tests_path, 'explicit_ground_truth_output/', 'output_' + input_file_index + '.out')) as f:
