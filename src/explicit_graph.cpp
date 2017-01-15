@@ -11,8 +11,9 @@
 #define right second
 
 
+void print_graph(const std::vector<enode>& G);
 
-std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::vector<int> lf, std::vector< std::pair<bool, bool> > bit_vectors, int d, int n, int k){
+std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::vector<int> lf, std::vector<bool>& left, std::vector<bool>& right, int d, int n, int k){
     
     //std::cout << d<< std::endl;
     // std::cout << "Final graf G:" << std::endl;
@@ -31,9 +32,9 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
     //za lef i right max
     std::vector<std::pair<u_int, u_int>> rank_vectors;
     u_int left_ = 0, right_ = 0;
-	for (int i = 0; i < bit_vectors.size(); i++) {
-		left_ += bit_vectors[i].left;
-		right_ += bit_vectors[i].right;
+	for (int i = 0; i < left.size(); i++) {
+		left_ += left[i];
+		right_ += right[i];
 		rank_vectors.push_back(std::pair<u_int, u_int>(left_, right_));
 	}
     u_int rightMax = (rank_vectors[n].right / 2 );
@@ -80,7 +81,7 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
             int newId = 0;
 
             //std::cout << "rank r " << bit_vectors[i+1].right << std::endl;
-            if (ones%2==0 and bit_vectors[i+1].right==0){
+            if (ones % 2 == 0 and right[i+1] == 0){
                 newId = rightMax + rank_vectors[i].left;
                 std::cout << "newId if " << newId << std::endl;
 
@@ -110,7 +111,9 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
         start_nodes[d-1-s] = id;
         i = lf[idx];
     }
-   
+
+    print_graph(G);
+
     return G;
 
 
@@ -129,4 +132,37 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
         std::cout << "] )" << std::endl;
     }*/
     
+}
+
+void print_graph(const std::vector<enode>& G) {
+
+    uint64_t labels = 0;
+    uint64_t edges = 0;
+    
+    uint64_t node_number = 0;
+    for(const auto& node : G)
+    {
+        labels += G[node_number].pos_list.size();
+        edges += G[node_number].adj_list.size();
+        // Print node_number
+        std::cout << "  " << node_number << " ";
+        // Print label
+        std::cout << "[label=\"";
+        {
+            std::cout << node.pos_list[node.pos_list.size()-1];
+            for(uint64_t j=node.pos_list.size()-2; j<node.pos_list.size()-1; --j)
+            {
+                std::cout << "," << node.pos_list[j];
+            }
+        }
+        std::cout << ":" << node.len << "\"]\n";
+        // Print edges
+        for(uint64_t j=node.adj_list.size()-1; j<node.adj_list.size(); --j)
+        {
+            std::cout << "  " << node_number << " -> " << node.adj_list[j] << "\n";
+        }
+        ++node_number;
+    }
+    std::cout << "}" << std::endl;
+   
 }

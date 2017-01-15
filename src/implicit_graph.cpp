@@ -15,13 +15,13 @@
 
 #define ALPHABET_SIZE 6
 
-void rank_preprocess(const std::vector<std::pair<bool, bool>>& bit_vectors, std::vector<std::pair<uint64_t, uint64_t>>& ranks) {
+void rank_preprocess(const std::vector<bool>& left, const std::vector<bool> & right, std::vector<std::pair<uint16_t, uint16_t>>& ranks) {
 
-	uint64_t left_ = 0, right_ = 0;
-	for (int i = 0; i < bit_vectors.size(); i++) {
-		left_ += bit_vectors[i].left;
-		right_ += bit_vectors[i].right;
-		ranks.push_back(std::pair<uint64_t, uint64_t>(left_, right_));
+	uint16_t left_ = 0, right_ = 0;
+	for (int i = 0; i < left.size(); i++) {
+		left_ += left[i];
+		right_ += right[i];
+		ranks.push_back(std::pair<uint16_t, uint16_t>(left_, right_));
 	}
 }
 
@@ -35,23 +35,23 @@ void create_wt(sdsl::wt_blcd<>& wt, int i, int j, char* bwt, int n) {
 	construct_im(wt, tmp, 1);
 } 
 
-std::vector<node> create_implicit_graph(int k, char* bwt, int n, int d, std::vector< std::pair<bool, bool>>& bit_vectors,
-	std::vector<node>& G, std::deque<uint64_t>& Q) {
+std::vector<node> create_implicit_graph(int k, char* bwt, int n, int d, std::vector<bool>& left, std::vector<bool>& right,
+	std::vector<node>& G, std::deque<uint16_t>& Q) {
     
-	std::vector<std::pair<uint64_t, uint64_t>> rank_vectors;
-	rank_preprocess(bit_vectors, rank_vectors);
+	std::vector<std::pair<uint16_t, uint16_t>> rank_vectors;
+	rank_preprocess(left, right, rank_vectors);
 
-	uint64_t rightMax = rank_vectors[n].right / 2;
-	uint64_t leftMax = rank_vectors[n].left;
+	uint16_t rightMax = rank_vectors[n].right / 2;
+	uint16_t leftMax = rank_vectors[n].left;
 
 	// addition of stop nodes
-	uint64_t id;
+	uint16_t id;
 	G.resize(rightMax + leftMax + d);
 	for (int s = 0; s < d; s++) {
 		id = rightMax + leftMax + s;
 		G[id] = node(1, s, 1, s); 
 		Q.push_back(id);
-		bit_vectors[s+1].left = 0;
+		left[s+1] = 0;
 	}
 
 	int q_init_size = Q.size();
@@ -95,7 +95,7 @@ std::vector<node> create_implicit_graph(int k, char* bwt, int n, int d, std::vec
 				uint64_t j = C[c] + rank_c_j[it] - 1;
 
 				uint64_t ones = rank_vectors[i+1].right;
-				if (ones % 2 == 0 && bit_vectors[i+1].right == 0) {
+				if (ones % 2 == 0 && right[i+1] == 0) {
 					if (c != '$' && c != '#') {
 						if (size == 1) {
 							extendable = true;

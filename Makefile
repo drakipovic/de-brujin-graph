@@ -1,6 +1,6 @@
 CC = g++-5
 DEBUG = -g -Wall
-CFLAGS = -c -std=c++11 $(DEBUG) -I${SDSLLITE}/include
+CFLAGS = -c -std=c++11 -O3 -flto $(DEBUG) -I${SDSLLITE}/include
 LDFLAGS= -L${SDSLLITE}/lib -static -lsdsl -ldivsufsort -ldivsufsort64
 
 SRCDIR = src

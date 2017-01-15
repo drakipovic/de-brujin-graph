@@ -42,17 +42,20 @@ int main(int argc, char **argv){
     uint64_t n = s.size();
     
     char bwt[n + 1];
-    std::deque<uint64_t> Q;
+    std::deque<uint16_t> Q;
     std::vector<node> G;
+    std::vector<bool> bit_vector_left(n + 1);
+    std::vector<bool> bit_vector_right(n + 1);
+    
+    //std::vector< std::pair<bool, bool>> bit_vectors = create_bit_vectors(k, bwt, d - 1, s, G, Q);
+    create_bit_vectors(k, bwt, d - 1, s, G, Q, bit_vector_left, bit_vector_right);
 
-    std::vector< std::pair<bool, bool>> bit_vectors = create_bit_vectors(k, bwt, d - 1, s, G, Q);
-
-    G = create_implicit_graph(k, bwt, n, d, bit_vectors, G, Q);
-
+    G = create_implicit_graph(k, bwt, n, d, bit_vector_left, bit_vector_right, G, Q);
+    
     std::map<char, int> C = create_c(bwt, n);
     std::vector<int> lf = create_lf(bwt, C, n);
 
-    std::vector<enode> eG = create_explicit_graph(G, bwt, lf, bit_vectors, d, n, k);
+    std::vector<enode> eG = create_explicit_graph(G, bwt, lf, bit_vector_left, bit_vector_right, d, n, k);
 
     return 0;
 

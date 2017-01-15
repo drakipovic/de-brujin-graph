@@ -37,7 +37,7 @@ std::string read(const std::string& path, int& num_stop_nodes){
 }
 
 
-char* create_bwt(const std::string& in, const std::vector<int>& suffix_array, int d){
+char* create_bwt(const std::string& in, const std::vector<uint32_t>& suffix_array, int d){
     int n = suffix_array.size();
     char *bwt = (char*)malloc(n*sizeof(char));
 
@@ -56,7 +56,7 @@ char* create_bwt(const std::string& in, const std::vector<int>& suffix_array, in
 }
 
 
-std::vector<int> create_suffix_array(const std::string s){
+std::vector<uint32_t> create_suffix_array(const std::string s){
     int n = s.size() + 1;
 
     int *sa = (int*)malloc(n * sizeof(int));
@@ -64,15 +64,15 @@ std::vector<int> create_suffix_array(const std::string s){
 
     if(ret < 0) std::cout << "Something went wrong!" << std::endl;
 
-    std::vector<int> sa_v(sa, sa + n);
+    std::vector<uint32_t> sa_v(sa, sa + n);
     return sa_v;
 }
 
 
-std::vector<int> create_lcp(const std::string& s, const std::vector<int>& sa){
+std::vector<int32_t> create_lcp(const std::string& s, const std::vector<uint32_t>& sa){
     int n = s.size();
-    std::vector<int> lcp(n+2, 0);
-    std::vector<int> rank(n+1, 0);
+    std::vector<int32_t> lcp(n+2, 0);
+    std::vector<int32_t> rank(n+1, 0);
 
   
     for(int i = 0; i <= n; ++i) rank[sa[i]] = i;
@@ -80,7 +80,7 @@ std::vector<int> create_lcp(const std::string& s, const std::vector<int>& sa){
     int k = 0;
     for(int i = 0; i <= n; ++i){
 
-        int j = sa[rank[i]-1];
+        uint32_t j = sa[rank[i]-1];
         while(i+k < n && j+k < n && s[i+k] == s[j+k]){
             if(s[i+k] == 1) break;
             ++k;

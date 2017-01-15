@@ -43,11 +43,11 @@ struct enode {
 
 std::string read(const std::string& path, int& num_stop_nodes);
 
-char* create_bwt(const std::string& in, const std::vector<int>& suffix_array, int d);
+char* create_bwt(const std::string& in, const std::vector<uint32_t>& suffix_array, int d);
 
-std::vector<int> create_suffix_array(const std::string s);
+std::vector<uint32_t> create_suffix_array(const std::string s);
 
-std::vector<int> create_lcp(const std::string& str, const std::vector<int>& suffix_array);
+std::vector<int32_t> create_lcp(const std::string& str, const std::vector<uint32_t>& suffix_array);
 
 std::map<char, int> create_c(char* bwt, int n);
 
