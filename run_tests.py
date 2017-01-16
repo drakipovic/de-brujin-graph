@@ -5,8 +5,6 @@ import subprocess
 
 from graph_parser import Graph
 
-g = Graph()
-
 class bcolors:
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
@@ -91,12 +89,14 @@ for input_file in input_files:
         print 'Starting test on file {}...........'.format(input_file),
 
         output = subprocess.check_output([bin_path + '/main', input_file, '--explicit'])
-        g.parse(data=output.split('\n'))
-        output = g.traverse()
+
+        g1 = Graph()
+        g1.parse(data=output.split('\n'))
+        output = g1.traverse()
         
-        g = Graph()
-        g.parse(filename=os.path.join(tests_path, 'explicit_ground_truth_output/', 'output_' + input_file_index + '.out'))
-        correct_output = g.traverse()
+        g2 = Graph()
+        g2.parse(filename=os.path.join(tests_path, 'explicit_ground_truth_output/', 'output_' + input_file_index + '.out'))
+        correct_output = g2.traverse()
 
         
         if output == correct_output:
