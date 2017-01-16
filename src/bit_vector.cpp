@@ -15,7 +15,7 @@ void create_bit_vectors(int k, char* bwt, int d, const std::string& s, std::vect
 
     char *BWT = create_bwt(s, suffix_array, d + 1);
     for(int i = 1; i < n+1; ++i){
-        bwt[i] = BWT[i];
+        bwt[i] = BWT[i]; //copy bwt so it starts at index 1
     }
 
     std::vector<int32_t> lcp = create_lcp(s, suffix_array);
@@ -38,8 +38,8 @@ void create_bit_vectors(int k, char* bwt, int d, const std::string& s, std::vect
                 if(k_index > lb){
                     bit_vector_right[lb] = true;
                     bit_vector_right[i-1] = true;
-                    G.push_back(node(k, lb-1, i-lb, lb-1));
-                    Q.push_back(counter);
+                    G.push_back(node(k, lb-1, i-lb, lb-1)); //adding nodes for implicit graph
+                    Q.push_back(counter); //adding node ids
                     ++counter;
                 }
                 

@@ -46,10 +46,10 @@ char* create_bwt(const std::string& in, const std::vector<uint32_t>& suffix_arra
     for(int i = 1; i < n; ++i) {
 
         if (suffix_array[i] > 0) {
-            if (in[suffix_array[i]-1] == 1) bwt[i] = '#';
+            if (in[suffix_array[i]-1] == 1) bwt[i] = '#'; //# is 1
             else bwt[i] = in[suffix_array[i]-1];
         } else {
-            bwt[i] = '$';
+            bwt[i] = '$'; //$ is 0
         }
         
     }
@@ -84,7 +84,7 @@ std::vector<int32_t> create_lcp(const std::string& s, const std::vector<uint32_t
 
         uint32_t j = sa[rank[i]-1];
         while(i+k < n && j+k < n && s[i+k] == s[j+k]){
-            if(s[i+k] == 1) break;
+            if(s[i+k] == 1) break; //every occurence of #(1) has different value
             ++k;
         }
      
@@ -111,7 +111,7 @@ std::map<char, int> create_c(char* bwt, int n){
     }
 
     std::map<char, int> C;
-    C['$'] = 0;
+    C['$'] = 0; //$ is smallest char in alphabet
     C['#'] = 1;
     C['A'] = a+1;
     C['C'] = c;
