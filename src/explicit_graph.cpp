@@ -13,7 +13,7 @@
 
 void print_graph(const std::vector<enode>& G);
 
-std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::vector<int> lf, std::vector<bool>& left, std::vector<bool>& right, int d, int n, int k){
+std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::vector<int> lf, std::vector<bool>& left, std::vector<bool>& right, int d, int n, int k, bool print){
     
     //std::cout << d<< std::endl;
     // std::cout << "Final graf G:" << std::endl;
@@ -111,8 +111,8 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
         start_nodes[d-1-s] = id;
         i = lf[idx];
     }
-
-    print_graph(G);
+    if(print)
+        print_graph(G);
 
     return G;
 
@@ -145,7 +145,7 @@ void print_graph(const std::vector<enode>& G) {
         labels += G[node_number].pos_list.size();
         edges += G[node_number].adj_list.size();
         // Print node_number
-        std::cout << "  " << node_number << " ";
+        std::cout << node_number << " ";
         // Print label
         std::cout << "[label=\"";
         {
@@ -159,10 +159,8 @@ void print_graph(const std::vector<enode>& G) {
         // Print edges
         for(uint64_t j=node.adj_list.size()-1; j<node.adj_list.size(); --j)
         {
-            std::cout << "  " << node_number << " -> " << node.adj_list[j] << "\n";
+            std::cout << node_number << " -> " << node.adj_list[j] << "\n";
         }
         ++node_number;
     }
-    std::cout << "}" << std::endl;
-   
 }

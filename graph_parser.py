@@ -10,9 +10,11 @@ class Graph(object):
         self.path = ""
         self.curr_node = 0
 
-    def parse(self, filename):
-        with open(root + '/' + filename) as f:
-            data = [line.strip() for line in f.readlines()]
+    def parse(self, filename=None, data=None):
+        if filename:
+            #absolute path in filename
+            with open(filename) as f:
+                data = [line.strip() for line in f.readlines()]
         
         self.graph = self._save_graph(data)
     
@@ -48,8 +50,3 @@ class Graph(object):
                 graph[current_node]['neighbors'].append(int(n[1]))
         
         return graph
-    
-
-graph = Graph()
-graph.parse('graph.txt')
-print graph.traverse()

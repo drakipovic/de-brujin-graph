@@ -36,7 +36,7 @@ void create_wt(sdsl::wt_blcd<>& wt, int i, int j, char* bwt, int n) {
 } 
 
 std::vector<node> create_implicit_graph(int k, char* bwt, int n, int d, std::vector<bool>& left, std::vector<bool>& right,
-	std::vector<node>& G, std::deque<uint16_t>& Q) {
+	std::vector<node>& G, std::deque<uint16_t>& Q, bool print) {
     
 	std::vector<std::pair<uint16_t, uint16_t>> rank_vectors;
 	rank_preprocess(left, right, rank_vectors);
@@ -125,14 +125,16 @@ std::vector<node> create_implicit_graph(int k, char* bwt, int n, int d, std::vec
 	
 	//sort output for testing 
 	std::vector<node> graph(G.size());
+	if(print){
+		for(int i = 0; i < G.size(); ++i) graph.push_back(G[i]);
+		std::sort(graph.begin(), graph.end(), cmp);
 
-	for(int i = 0; i < G.size(); ++i) graph.push_back(G[i]);
-	std::sort(graph.begin(), graph.end(), cmp);
-
-	for (int i = 0; i < graph.size(); ++i){
-		if(!graph[i].len) continue;
-		std::cout << graph[i].len << " " <<  graph[i].lb << " " << graph[i].size << " " << graph[i].suffix_lb  << std::endl;
+		for (int i = 0; i < graph.size(); ++i){
+			if(!graph[i].len) continue;
+			std::cout << graph[i].len << " " <<  graph[i].lb << " " << graph[i].size << " " << graph[i].suffix_lb  << std::endl;
+		}
 	}
+
 	return G;
 } 
 
