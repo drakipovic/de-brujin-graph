@@ -1,8 +1,8 @@
+//created: Nov 28, 2016
+//author: Dino Rakipovic
 #include "bit_vector.h"
-
 #include <utility>
 #include <iostream>
-
 #include "sais.h"
 
 void create_bit_vectors(int k, char* bwt, int d, const std::string& s, std::vector<node>& G, 

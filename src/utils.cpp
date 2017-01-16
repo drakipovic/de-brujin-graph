@@ -1,3 +1,5 @@
+//created: Nov 28, 2016
+//authors: Dino Rakipovic, Tena Perak, Katarina Matic
 #include "utils.h"
 #include "sais.h"
 

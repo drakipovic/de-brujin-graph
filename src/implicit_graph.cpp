@@ -1,18 +1,16 @@
+//created: Dec 13, 2016
+//author: Tena Perak
 #include "implicit_graph.h"
-
 #include <cstdio>
 #include <cstdlib>
 #include <algorithm>
-
 #include <sdsl/suffix_arrays.hpp>
 #include <sdsl/wavelet_trees.hpp>
-
 #include "utils.h"
 #include "bit_vector.h"
 
 #define left first
 #define right second
-
 #define ALPHABET_SIZE 6
 
 void rank_preprocess(const std::vector<bool>& left, const std::vector<bool> & right, std::vector<std::pair<uint16_t, uint16_t>>& ranks) {
