@@ -6,7 +6,8 @@
 #include "sais.h"
 
 void create_bit_vectors(int k, char* bwt, int d, const std::string& s, std::vector<node>& G, 
-    std::deque<uint16_t>& Q, std::vector<bool>& bit_vector_left, std::vector<bool>& bit_vector_right, bool print) {
+    std::deque<uint16_t>& Q, std::vector<bool>& bit_vector_left, std::vector<bool>& bit_vector_right, 
+    bool print, std::ofstream& out) {
     
     int n = s.size();
     
@@ -73,7 +74,7 @@ void create_bit_vectors(int k, char* bwt, int d, const std::string& s, std::vect
 
     if(print){
         for(int i = 1; i < bit_vector_left.size(); ++i){
-            std::cout << bit_vector_right[i] << " " << bit_vector_left[i] << std::endl;
+            out << bit_vector_right[i] << " " << bit_vector_left[i] << std::endl;
         }
     }
 

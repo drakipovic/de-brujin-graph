@@ -7,16 +7,19 @@
 #include <map>
 #include <iostream>
 #include <math.h>
+#include <fstream>
+
 #include "utils.h"
 
 #define left first
 #define right second
 
 
-void print_graph(const std::vector<enode>& G);
+void print_graph(const std::vector<enode>& G, std::ofstream& out);
 
 std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::vector<int> lf, 
-    std::vector<bool>& left, std::vector<bool>& right, int d, int n, int k, bool print){
+    std::vector<bool>& left, std::vector<bool>& right, int d, int n, int k, bool print, 
+    std::ofstream& out){
 
     //initialize explicit graph nodes
     std::vector<enode> G(iG.size());
@@ -60,7 +63,6 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
             //calculate new id
             if (ones % 2 == 0 and right[i+1] == 0){
                 newId = rightMax + rank_vectors[i].left;
-                std::cout << "newId if " << newId << std::endl;
             }
             else{
                 newId = (ones-1)/2;
@@ -82,12 +84,12 @@ std::vector<enode> create_explicit_graph(std::vector<node> iG, char* bwt, std::v
         i = lf[idx];
     }
     if(print)
-        print_graph(G);
+        print_graph(G, out);
 
     return G;
 }
 
-void print_graph(const std::vector<enode>& G) {
+void print_graph(const std::vector<enode>& G, std::ofstream& out) {
 
     uint64_t labels = 0;
     uint64_t edges = 0;
@@ -98,21 +100,21 @@ void print_graph(const std::vector<enode>& G) {
         labels += G[node_number].pos_list.size();
         edges += G[node_number].adj_list.size();
         // Print node_number
-        std::cout << node_number << " ";
+        out << node_number << " ";
         // Print label
-        std::cout << "[label=\"";
+        out << "[label=\"";
         {
-            std::cout << node.pos_list[node.pos_list.size()-1];
+            out << node.pos_list[node.pos_list.size()-1];
             for(uint64_t j=node.pos_list.size()-2; j<node.pos_list.size()-1; --j)
             {
-                std::cout << "," << node.pos_list[j];
+                out << "," << node.pos_list[j];
             }
         }
-        std::cout << ":" << node.len << "\"]\n";
+        out << ":" << node.len << "\"]\n";
         // Print edges
         for(uint64_t j=node.adj_list.size()-1; j<node.adj_list.size(); --j)
         {
-            std::cout << node_number << " -> " << node.adj_list[j] << "\n";
+            out << node_number << " -> " << node.adj_list[j] << "\n";
         }
         ++node_number;
     }

@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <algorithm>
+#include <fstream>
+
 #include <sdsl/suffix_arrays.hpp>
 #include <sdsl/wavelet_trees.hpp>
 #include "utils.h"
@@ -13,7 +15,8 @@
 #define right second
 #define ALPHABET_SIZE 6
 
-void rank_preprocess(const std::vector<bool>& left, const std::vector<bool> & right, std::vector<std::pair<uint16_t, uint16_t>>& ranks) {
+void rank_preprocess(const std::vector<bool>& left, const std::vector<bool> & right, 
+	std::vector<std::pair<uint16_t, uint16_t>>& ranks) {
 
 	uint16_t left_ = 0, right_ = 0;
 	for (int i = 0; i < left.size(); i++) {
@@ -33,8 +36,9 @@ void create_wt(sdsl::wt_blcd<>& wt, int i, int j, char* bwt, int n) {
 	construct_im(wt, tmp, 1);
 } 
 
-std::vector<node> create_implicit_graph(int k, char* bwt, int n, int d, std::vector<bool>& left, std::vector<bool>& right,
-	std::vector<node>& G, std::deque<uint16_t>& Q, bool print) {
+std::vector<node> create_implicit_graph(int k, char* bwt, int n, int d, std::vector<bool>& left, 
+	std::vector<bool>& right, std::vector<node>& G, std::deque<uint16_t>& Q, bool print, 
+	std::ofstream& out) {
     
 	std::vector<std::pair<uint16_t, uint16_t>> rank_vectors;
 	rank_preprocess(left, right, rank_vectors);
@@ -122,14 +126,15 @@ std::vector<node> create_implicit_graph(int k, char* bwt, int n, int d, std::vec
 	}
 	
 	//sort output for testing 
-	std::vector<node> graph(G.size());
+	
 	if(print){
+		std::vector<node> graph(G.size());
 		for(int i = 0; i < G.size(); ++i) graph.push_back(G[i]);
 		std::sort(graph.begin(), graph.end(), cmp);
 
 		for (int i = 0; i < graph.size(); ++i){
 			if(!graph[i].len) continue;
-			std::cout << graph[i].len << " " <<  graph[i].lb << " " << graph[i].size << " " << graph[i].suffix_lb  << std::endl;
+			out << graph[i].len << " " <<  graph[i].lb << " " << graph[i].size << " " << graph[i].suffix_lb  << std::endl;
 		}
 	}
 
