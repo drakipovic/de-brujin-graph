@@ -4,9 +4,9 @@ Implementation of implicit compressed de Bruijn graph.
 Project for bioinformatics course on Faculty of Electrical Engineering and Computing, Zagreb.
 
 ## Authors
-  [Tena Perak] (https://github.com/tenap)
-  [Katarina Matić] (https://github.com/qwertziuo40) 
-  [Dino Rakipović] (https://github.com/drakipovic) 
+  [Tena Perak] (https://github.com/tenap)  
+  [Katarina Matić] (https://github.com/qwertziuo40)   
+  [Dino Rakipović] (https://github.com/drakipovic)  
 
 
 ## Prerequisites
@@ -40,9 +40,10 @@ options are
     --explicit
     --bitvector
     
-`implicit` prints only implicit graph
-`explicit` prints only explicit graph
-`bitvector` prints only bit vectors
+`implicit` prints only implicit graph  
+`explicit` prints only explicit graph  
+`bitvector` prints only bit vectors  
+`{int}` is size of k-mer.
 
 ## Testing
 
@@ -51,5 +52,5 @@ options are
     
 ## License
 
-MIT License
+MIT License  
 Copyright (c) Katarina Matic, Tena Perak, Dino Rakipovic
