@@ -5,7 +5,7 @@ Project for bioinformatics course on Faculty of Electrical Engineering and Compu
 
 ## Authors
   [Tena Perak] (https://github.com/tenap)  
-  [Katarina Matić] (https://github.com/qwertziuo40)   
+  [Katarina Matić] (https://github.com/qwertzuio40)   
   [Dino Rakipović] (https://github.com/drakipovic)  
 
 
